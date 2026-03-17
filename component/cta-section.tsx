@@ -44,7 +44,7 @@ export default function CTASection() {
       `}</style>
 
       <section
-        className="relative overflow-hidden py-16 px-6"
+        className="relative overflow-hidden py-10 sm:py-16 px-4 sm:px-6"
         style={{ background: "linear-gradient(135deg, #0f0d0a 0%, #1a1410 50%, #0f0d0a 100%)" }}
       >
         {/* BG orbs */}
@@ -119,37 +119,34 @@ export default function CTASection() {
           </RevealOnScroll>
 
           {/* Buttons */}
-          <RevealOnScroll direction="up" duration={650} delay={280}>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-6 w-full max-w-sm sm:max-w-none mx-auto" style={{ overflow: "visible" }}>
 
               {/* Primary — Book */}
-              <div className="relative">
+              <a
+                href="#"
+                onClick={e => { e.preventDefault(); window.dispatchEvent(new CustomEvent("open-booking-modal")); }}
+                className="cta-btn-primary relative inline-flex items-center justify-center gap-3 text-white font-semibold rounded-full px-7 py-4 sm:px-9 sm:py-5 text-[14px] sm:text-[15px] transition-all duration-300 hover:scale-105 w-full sm:w-auto"
+                style={{
+                  boxShadow: "0 8px 32px rgba(155,112,87,0.4), 0 2px 8px rgba(0,0,0,0.3)",
+                  fontFamily: "Outfit, sans-serif",
+                  textDecoration: "none",
+                }}
+              >
                 <span className="cta-ring" />
                 <span className="cta-ring cta-ring-2" />
-                <a
-                  href="#"
-                  onClick={e => { e.preventDefault(); window.dispatchEvent(new CustomEvent("open-booking-modal")); }}
-                  className="cta-btn-primary relative inline-flex items-center gap-3 text-white font-semibold rounded-full px-9 py-5 text-[15px] transition-all duration-300 hover:scale-105"
-                  style={{
-                    boxShadow: "0 8px 32px rgba(155,112,87,0.4), 0 2px 8px rgba(0,0,0,0.3)",
-                    fontFamily: "Outfit, sans-serif",
-                    textDecoration: "none",
-                  }}
-                >
-                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
-                    <rect x="3" y="4" width="18" height="18" rx="2" stroke="white" strokeWidth="2"/>
-                    <path d="M16 2v4M8 2v4M3 10h18" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-                  </svg>
-                  Book Your Consultation Now
-                </a>
-              </div>
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" style={{ position: "relative", zIndex: 1 }}>
+                  <rect x="3" y="4" width="18" height="18" rx="2" stroke="white" strokeWidth="2"/>
+                  <path d="M16 2v4M8 2v4M3 10h18" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+                <span style={{ position: "relative", zIndex: 1 }}>Book Your Consultation Now</span>
+              </a>
 
               {/* Secondary — WhatsApp */}
               <a
                 href="https://wa.me/916385083099"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 font-semibold text-[15px] rounded-full px-9 py-5 border transition-all duration-300 hover:scale-105"
+                className="inline-flex items-center justify-center gap-3 font-semibold text-[14px] sm:text-[15px] rounded-full px-7 py-4 sm:px-9 sm:py-5 border transition-all duration-300 hover:scale-105 w-full sm:w-auto"
                 style={{
                   color: "rgba(255,255,255,0.85)",
                   borderColor: "rgba(155,112,87,0.3)",
@@ -165,8 +162,7 @@ export default function CTASection() {
                 WhatsApp Us
               </a>
 
-            </div>
-          </RevealOnScroll>
+          </div>
 
         </div>
       </section>

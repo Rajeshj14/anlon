@@ -1,9 +1,42 @@
 'use client'
 
-import React from 'react';
+import { useState, useEffect, useRef } from 'react';
 import RevealOnScroll from './RevealOnScroll';
 
+function useCountUp(target: number, duration = 1800) {
+  const [count, setCount] = useState(0);
+  const [started, setStarted] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setStarted(true); obs.disconnect(); } },
+      { threshold: 0.5 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!started) return;
+    let start: number | null = null;
+    const step = (ts: number) => {
+      if (!start) start = ts;
+      const progress = Math.min((ts - start) / duration, 1);
+      setCount(Math.floor(progress * target));
+      if (progress < 1) requestAnimationFrame(step);
+      else setCount(target);
+    };
+    requestAnimationFrame(step);
+  }, [started, target, duration]);
+
+  return { count, ref };
+}
+
 const HairSpecialistComponent = () => {
+  const { count, ref: countRef } = useCountUp(12);
     return (
         <>
         <style>{`
@@ -205,7 +238,7 @@ const HairSpecialistComponent = () => {
 
                             <RevealOnScroll direction="up" duration={700} delay={100}>
                             <h1 className="text-4xl font-bold text-[#9B7057] leading-tight uppercase tracking-tight">
-                                MEET YOUR HAIR SPECIALIST
+                                GET PROFESSIONAL HAIR TREATMENT ADVICE
                             </h1>
                             </RevealOnScroll>
 
@@ -283,7 +316,7 @@ const HairSpecialistComponent = () => {
                             </div>
                             <div className="absolute top-1/2 left-0 -translate-y-1/2  bg-orange-50 text-black px-8 py-10 shadow-xl">
                                 <div className="text-center">
-                                    <div className="text-8xl font-bold leading-none mb-2">12</div>
+                                    <div ref={countRef} className="text-8xl font-bold leading-none mb-2">{count}+</div>
                                     <div className="text-base font-semibold leading-tight">Years<br/>Experience</div>
                                 </div>
                             </div>
@@ -323,7 +356,7 @@ const HairSpecialistComponent = () => {
                             </div>
                             <div className="absolute top-1/2 left-0 -translate-y-1/2  bg-orange-50 text-black px-3 sm:px-4 py-4 sm:py-5 shadow-xl">
                                 <div className="text-center">
-                                    <div className="text-3xl sm:text-4xl font-bold leading-none mb-1">12</div>
+                                    <div className="text-3xl sm:text-4xl font-bold leading-none mb-1">{count}+</div>
                                     <div className="text-xs sm:text-sm font-semibold leading-tight">Years<br/>Experience</div>
                                 </div>
                             </div>

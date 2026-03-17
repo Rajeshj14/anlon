@@ -179,11 +179,16 @@ export default function SkinTreatments() {
     return () => clearInterval(timer);
   }, [inView, paused]);
 
-  // Scroll active tab into view
+  // Scroll active tab into view (container only — no page scroll)
   useEffect(() => {
     if (!isMounted.current) { isMounted.current = true; return; }
-    const el = tabsScrollRef.current?.querySelector<HTMLButtonElement>(".sk-tab.active");
-    el?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+    const container = tabsScrollRef.current;
+    const el = container?.querySelector<HTMLButtonElement>(".sk-tab.active");
+    if (!container || !el) return;
+    const containerRect = container.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
+    const targetLeft = container.scrollLeft + elRect.left - containerRect.left - (containerRect.width - elRect.width) / 2;
+    container.scrollTo({ left: targetLeft, behavior: "smooth" });
   }, [active]);
 
   const handleTabClick = (id: string) => {

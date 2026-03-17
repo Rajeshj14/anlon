@@ -22,9 +22,10 @@ export default function page() {
       <WhoWeAreSection />
       <HairTreatmentProcedure />
       <HairFallTreatmentSection />
+      <MedicalLabSection />
+
       <HealthcareFeaturesSection />
       {/* <ClinicVideosSection /> */}
-      <MedicalLabSection />
       <MedicalServicesComponent />
       <FAQSection />
       <IframeTwoColumnSection />

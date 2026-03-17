@@ -150,37 +150,10 @@ export default function Navbar() {
           transform: translateX(-50%) scaleX(1);
         }
 
-        /* CTA Button */
+        /* CTA Button — uses global .btn-cta */
         .nb-cta {
-          position: relative;
-          overflow: hidden;
-          font-family: "Outfit", sans-serif;
-          font-size: 14px;
-          font-weight: 600;
-          color: #ffffff;
-          background: linear-gradient(90deg, #7a5640 0%, #9B7057 40%, #D9953D 60%, #9B7057 80%, #7a5640 100%);
-          background-size: 200% 100%;
-          border: none;
-          border-radius: 50px;
           padding: 10px 22px;
-          cursor: pointer;
-          text-decoration: none;
-          display: inline-flex;
-          align-items: center;
-          gap: 7px;
-          white-space: nowrap;
-          animation: nb-shimmer 3s linear infinite;
-          box-shadow: 0 0 0 0 rgba(155, 112, 87, 0.5);
-          transition: box-shadow 0.3s;
-        }
-
-        .nb-cta:hover {
-          box-shadow: 0 0 18px rgba(155, 112, 87, 0.7), 0 0 32px rgba(155, 112, 87, 0.35);
-        }
-
-        @keyframes nb-shimmer {
-          0% { background-position: 200% center; }
-          100% { background-position: -200% center; }
+          font-size: 14px;
         }
 
         /* Hamburger */
@@ -291,26 +264,13 @@ export default function Navbar() {
           margin: 8px 0;
         }
 
+        /* Mobile CTA — uses global .btn-cta */
         .nb-mobile-cta {
           margin-top: 4px;
-          text-align: center;
-          font-family: "Outfit", sans-serif;
-          font-size: 15px;
-          font-weight: 600;
-          color: #ffffff;
-          background: linear-gradient(90deg, #7a5640 0%, #9B7057 40%, #D9953D 60%, #9B7057 80%, #7a5640 100%);
-          background-size: 200% 100%;
-          border: none;
+          width: 100%;
+          justify-content: center;
           border-radius: 12px;
           padding: 14px;
-          cursor: pointer;
-          text-decoration: none;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-          animation: nb-shimmer 3s linear infinite;
-          box-shadow: 0 4px 20px rgba(155, 112, 87, 0.35);
         }
 
         @media (max-width: 900px) {
@@ -350,14 +310,12 @@ export default function Navbar() {
           </ul>
 
           {/* Desktop CTA */}
-          <div className="hidden sm:block">
-            <a href="tel:+916385083099" onClick={e => { e.preventDefault(); window.dispatchEvent(new CustomEvent("open-booking-modal")); }} className="htp-cta">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
-                <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C9.61 21 3 14.39 3 6a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.25 1.01l-2.2 2.2z" fill="white"/>
-              </svg>
-              +916385083099
-            </a>
-          </div>
+          <a href="tel:+916385083099" onClick={e => { e.preventDefault(); window.dispatchEvent(new CustomEvent("open-booking-modal")); }} className="btn-cta nb-cta">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+              <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C9.61 21 3 14.39 3 6a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.25 1.01l-2.2 2.2z" fill="white"/>
+            </svg>
+            +916385083099
+          </a>
 
           {/* Hamburger */}
           <button
@@ -387,7 +345,7 @@ export default function Navbar() {
             <div className="nb-mobile-divider" />
             <Link
               href="#"
-              className="nb-mobile-cta"
+              className="btn-cta nb-mobile-cta"
               onClick={() => { setMenuOpen(false); window.dispatchEvent(new CustomEvent("open-booking-modal")); }}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none">

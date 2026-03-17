@@ -327,7 +327,7 @@ export default function HairTreatmentProcedure() {
           box-shadow: 0 0 20px rgba(155,112,87,0.55), 0 0 0 6px rgba(155,112,87,0.1);
         }
         .htp-node.htp-node-done .htp-node-circle {
-          background: rgba(155,112,87,0.2);
+          background: #ffffff;
           border-color: rgba(155,112,87,0.5);
           color: #c4906e;
         }

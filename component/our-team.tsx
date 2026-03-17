@@ -128,29 +128,30 @@ const HairServicesComponents = () => {
 
         {/* CTAs - from up */}
         <RevealOnScroll direction="up" delay={200} duration={700}>
-<div className="flex sm:flex-row gap-3 justify-center mt-10 max-sm:mb-4">
-              <a
+          <div className="flex flex-row items-center gap-3 justify-center mt-10 mb-4 sm:mb-0 px-4 sm:px-0">
+            <a
               href="#"
-              className="htp-cta"
+              className="htp-cta w-full sm:w-auto justify-center"
               onClick={(e) => { e.preventDefault(); window.dispatchEvent(new CustomEvent("open-booking-modal")); }}
             >
-              Book a Free Consultation
+              <span className="sm:hidden">Book Now</span>
+              <span className="hidden sm:inline">Book Your Consultation</span>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </a>
-  <a 
-    href="tel:+91 9500653243" 
-    className="flex w-full sm:w-auto sm:hidden"
-  >
-    <button
-      className="group flex items-center justify-center gap-2 text-white font-bold px-6 py-3 rounded-lg transition-all duration-300 hover:brightness-110 shadow-lg hover:shadow-xl text-sm w-full"
-      style={{ backgroundColor: '#9B7057' }}
-    >
-      Call Now
-    </button>
-  </a>
-</div>
+            <a
+              href="tel:+919500653243"
+              className="flex w-full sm:w-auto sm:hidden"
+            >
+              <button
+                className="group flex items-center justify-center gap-2 text-white font-bold px-6 py-3 rounded-lg transition-all duration-300 hover:brightness-110 shadow-lg hover:shadow-xl text-sm w-full"
+                style={{ backgroundColor: '#9B7057' }}
+              >
+                Call Now
+              </button>
+            </a>
+          </div>
         </RevealOnScroll>
 
       </div>
