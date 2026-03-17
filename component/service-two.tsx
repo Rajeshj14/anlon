@@ -67,7 +67,7 @@ export default function CosBeforeAfterSection() {
         setIsPlaying(true);
         setIsMuted(true);
       }
-    }, 3000);
+    }, 10000);
   };
 
   // Start auto-scroll on mount
