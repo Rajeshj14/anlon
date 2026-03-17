@@ -280,7 +280,7 @@ export default function CosBeforeAfterSection() {
                       {/* Gradient overlay */}
                       <div
                         className="absolute inset-0"
-                        style={{ background: "linear-gradient(to bottom, transparent 30%, rgba(5,5,5,0.5) 60%, rgba(5,5,5,0.95) 100%)" }}
+                        style={{ background: "linear-gradient(to bottom, transparent 50%, rgba(5,5,5,0.25) 75%, rgba(5,5,5,0.55) 100%)" }}
                       />
 
                       {/* Center card controls */}
