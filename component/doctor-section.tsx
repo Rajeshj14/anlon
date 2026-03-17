@@ -36,7 +36,7 @@ function useCountUp(target: number, duration = 1800) {
 }
 
 const HairSpecialistComponent = () => {
-  const { count, ref: countRef } = useCountUp(12);
+  const { count, ref: sentinelRef } = useCountUp(12);
     return (
         <>
         <style>{`
@@ -165,7 +165,7 @@ const HairSpecialistComponent = () => {
 
                 {/* ── Section Header ── */}
                 <RevealOnScroll direction="up" duration={700}>
-                  <div style={{ textAlign: "center", marginBottom: 48 }}>
+                  <div ref={sentinelRef} style={{ textAlign: "center", marginBottom: 48 }}>
 
                     {/* Eyebrow row */}
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 14, marginBottom: 14 }}>
@@ -316,7 +316,7 @@ const HairSpecialistComponent = () => {
                             </div>
                             <div className="absolute top-1/2 left-0 -translate-y-1/2  bg-orange-50 text-black px-8 py-10 shadow-xl">
                                 <div className="text-center">
-                                    <div ref={countRef} className="text-8xl font-bold leading-none mb-2">{count}+</div>
+                                    <div className="text-8xl font-bold leading-none mb-2">{count}+</div>
                                     <div className="text-base font-semibold leading-tight">Years<br/>Experience</div>
                                 </div>
                             </div>

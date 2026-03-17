@@ -368,7 +368,14 @@ export default function SkinHeroSection() {
         .sh-submit:disabled { opacity: 0.55; cursor: not-allowed; }
 
         /* ── CTA Buttons ── */
-        .sh-cta-row { display: flex; gap: 12px; width: 100%; }
+        .sh-cta-row { display: flex; gap: 12px; width: 100%; flex-direction: row; }
+        @media (max-width: 349px) {
+          .sh-cta-row { flex-direction: column; }
+          .sh-cta-primary, .sh-cta-secondary { width: 100% !important; flex: none !important; }
+        }
+        @media (min-width: 350px) {
+          .sh-cta-primary, .sh-cta-secondary { flex: 1; width: auto !important; }
+        }
 
         @keyframes sh-shimmer {
           0%   { background-position: -200% center; }
@@ -385,7 +392,7 @@ export default function SkinHeroSection() {
           font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 700;
           letter-spacing: 0.4px; color: #ffffff; cursor: pointer;
           text-decoration: none; overflow: hidden;
-          background: linear-gradient(90deg, #9B7057 0%, #D9953D 30%, #9B7057 50%, #7a5640 70%, #9B7057 100%);
+          background: linear-gradient(90deg, #9B7057 0%, #7a5640 30%, #9B7057 50%, #7a5640 70%, #9B7057 100%);
           background-size: 200% auto;
           animation: sh-shimmer 3s linear infinite, sh-glow-ring 2.5s ease-in-out infinite;
           transition: transform 0.2s ease; white-space: nowrap;

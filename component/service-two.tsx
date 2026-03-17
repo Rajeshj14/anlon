@@ -61,13 +61,15 @@ export default function CosBeforeAfterSection() {
 
   const startAutoScroll = () => {
     if (autoRef.current) clearInterval(autoRef.current);
+    const isMobile = typeof window !== "undefined" && window.innerWidth <= 580;
+    const delay = isMobile ? 15 * 60 * 1000 : 10000;
     autoRef.current = setInterval(() => {
       if (!manualMode.current) {
         setCurrent((p) => (p + 1) % total);
         setIsPlaying(true);
         setIsMuted(true);
       }
-    }, 10000);
+    }, delay);
   };
 
   // Start auto-scroll on mount
@@ -177,7 +179,7 @@ export default function CosBeforeAfterSection() {
         }
       `}</style>
 
-      <section className="ba-wrap max-sm:py-5 py-10" style={{ background: "linear-gradient(180deg, #0d0b0e 0%, #120e0b 100%)" }}>
+      <section className="ba-wrap max-sm:py-5 max-sm:mb-5 py-10" style={{ background: "linear-gradient(180deg, #0d0b0e 0%, #120e0b 100%)" }}>
         <div className="max-w-6xl mx-auto px-6">
 
           {/* Title */}
@@ -202,10 +204,10 @@ export default function CosBeforeAfterSection() {
                 Before / After Gallery
               </h2>
               <h2 className="ba-italic-accent" style={{ fontSize: "clamp(28px,4.5vw,44px)", lineHeight: 1.25, margin: "0 0 8px" }}>
-                Precision Treatments. Real Results.
+                Hear from our Hair specialist
               </h2>
               <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 15, maxWidth: 780, lineHeight: 1.7, margin: "0 auto" }}>
-                Because Hair Loss Needs the Right Diagnosis
+                Precision Treatments. Real Results.Because Hair Loss Needs the Right Diagnosis
               </p>
             </div>
 
