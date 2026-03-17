@@ -52,7 +52,7 @@ export default function Navbar() {
         .nb-inner {
           max-width: 1280px;
           margin: 0 auto;
-          padding: 10 24px;
+          padding: 10px 24px;
           height: 78px;
           display: flex;
           align-items: center;
