@@ -7,50 +7,94 @@ import RevealOnScroll from './RevealOnScroll';
 const WhoWeAreSection = () => {
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
-  const [showUnmuteHint, setShowUnmuteHint] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    // Already unlocked before — unmute as soon as video plays
-    const alreadyUnlocked = localStorage.getItem('anlons_sound_unlocked') === '1';
+    // Function to play video with proper sound settings
+    const setupVideo = async () => {
+      try {
+        // Check if user already enabled sound before
+        const soundEnabled = localStorage.getItem('anlons_sound_unlocked') === '1';
+        
+        if (soundEnabled) {
+          // If sound was enabled before, play with sound immediately
+          video.muted = false;
+          video.volume = 1;
+          setIsMuted(false);
+        } else {
+          // First time user - muted by default
+          video.muted = true;
+          setIsMuted(true);
+        }
+        
+        // Try to play video
+        await video.play();
+        
+        // Double-check sound state after play starts
+        if (soundEnabled) {
+          video.muted = false;
+          video.volume = 1;
+        }
+        
+      } catch (error) {
+        console.log('Autoplay prevented by browser:', error);
+        // If autoplay fails, ensure it's muted
+        video.muted = true;
+        setIsMuted(true);
+      }
+    };
 
-    if (alreadyUnlocked) {
-      // Unmute right after play starts (browser allows this for returning users)
-      const onPlaying = () => {
+    setupVideo();
+
+    // Handle first-time user interaction to enable sound
+    const handleFirstInteraction = async () => {
+      const soundEnabled = localStorage.getItem('anlons_sound_unlocked') === '1';
+      
+      if (!soundEnabled) {
         video.muted = false;
         video.volume = 1;
         setIsMuted(false);
-      };
-      video.addEventListener('playing', onPlaying, { once: true });
-      return () => video.removeEventListener('playing', onPlaying);
-    } else {
-      // First visit — show the tap overlay after 1s
-      const timer = setTimeout(() => setShowUnmuteHint(true), 1000);
-      return () => clearTimeout(timer);
-    }
-  }, []);
+        localStorage.setItem('anlons_sound_unlocked', '1');
+        
+        // Ensure video plays after unmute
+        try {
+          if (video.paused) {
+            await video.play();
+          }
+        } catch (e) {
+          console.log('Play after interaction failed:', e);
+        }
+      }
+    };
 
-  // User taps the overlay — unmute and save
-  const handleUnmute = () => {
-    const video = videoRef.current;
-    if (!video) return;
-    video.muted = false;
-    video.volume = 1;
-    setIsMuted(false);
-    setShowUnmuteHint(false);
-    localStorage.setItem('anlons_sound_unlocked', '1');
-  };
+    // Add event listeners for first interaction
+    document.addEventListener('click', handleFirstInteraction, { once: true });
+    document.addEventListener('touchstart', handleFirstInteraction, { once: true });
+
+    // Cleanup
+    return () => {
+      document.removeEventListener('click', handleFirstInteraction);
+      document.removeEventListener('touchstart', handleFirstInteraction);
+    };
+  }, []);
 
   const toggleMute = () => {
     const video = videoRef.current;
     if (!video) return;
+    
     video.muted = !video.muted;
     setIsMuted(video.muted);
+    
     if (!video.muted) {
       localStorage.setItem('anlons_sound_unlocked', '1');
+    }
+    
+    // Ensure video keeps playing
+    if (video.paused) {
+      video.play().catch(e => console.log('Play failed:', e));
     }
   };
 
@@ -73,14 +117,8 @@ const WhoWeAreSection = () => {
           0%, 100% { transform: translateX(0px); }
           50% { transform: translateX(15px); }
         }
-        @keyframes pulsePing {
-          0% { transform: scale(1); opacity: 0.8; }
-          70% { transform: scale(1.4); opacity: 0; }
-          100% { transform: scale(1.4); opacity: 0; }
-        }
         .animate-float-up-down { animation: floatUpDown 4s ease-in-out infinite; }
         .animate-float-left-right { animation: floatLeftRight 5s ease-in-out infinite; }
-        .animate-ping-slow { animation: pulsePing 1.8s ease-out infinite; }
       `}</style>
 
       <div className="max-w-7xl mx-auto">
@@ -183,7 +221,7 @@ const WhoWeAreSection = () => {
                 >
                   Book Now
                 </button>
-                <a href="tel:+91 9500653243" className="flex w-full sm:w-auto sm:hidden">
+                <a href="tel:+91 9500653243" className="flex w-full sm:w-auto">
                   <button
                     className="group flex items-center justify-center gap-2 text-white font-bold px-6 py-3 rounded-lg transition-all duration-300 hover:brightness-110 shadow-lg hover:shadow-xl text-sm w-full"
                     style={{ backgroundColor: '#9B7057' }}
@@ -203,52 +241,28 @@ const WhoWeAreSection = () => {
                   ref={videoRef}
                   src="/script-10.mov"
                   autoPlay
-                  muted
                   loop
                   playsInline
+                  muted={isMuted}  // This is controlled by state now
                   className="w-full h-full object-cover"
                 />
 
-                {/* ── TAP TO UNMUTE overlay — first visit only ── */}
-                {showUnmuteHint && (
-                  <button
-                    onClick={handleUnmute}
-                    className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-3 bg-black/30 backdrop-blur-[2px] transition-all"
-                    aria-label="Tap to unmute"
-                  >
-                    {/* Pulsing ring */}
-                    <div className="relative flex items-center justify-center">
-                      <div className="absolute w-16 h-16 rounded-full bg-white/40 animate-ping-slow" />
-                      <div className="relative w-14 h-14 rounded-full bg-white/90 flex items-center justify-center shadow-xl">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="#130e0b">
-                          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-                        </svg>
-                      </div>
-                    </div>
-                    <span className="text-white text-sm font-semibold tracking-wide drop-shadow">
-                      Tap to play with sound
-                    </span>
-                  </button>
-                )}
-
                 {/* Mute / Unmute toggle button */}
-                {!showUnmuteHint && (
-                  <button
-                    onClick={toggleMute}
-                    className="absolute bottom-3 right-3 z-20 flex items-center justify-center w-9 h-9 rounded-full bg-black/50 backdrop-blur-sm border border-white/20 text-white hover:bg-black/70 transition-all"
-                    aria-label={isMuted ? 'Unmute' : 'Mute'}
-                  >
-                    {isMuted ? (
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
-                      </svg>
-                    ) : (
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-                      </svg>
-                    )}
-                  </button>
-                )}
+                <button
+                  onClick={toggleMute}
+                  className="absolute bottom-3 right-3 z-20 flex items-center justify-center w-9 h-9 rounded-full bg-black/50 backdrop-blur-sm border border-white/20 text-white hover:bg-black/70 transition-all"
+                  aria-label={isMuted ? 'Unmute' : 'Mute'}
+                >
+                  {isMuted ? (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+                    </svg>
+                  ) : (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                    </svg>
+                  )}
+                </button>
 
               </div>
               <div className="absolute top-[10%] right-[5%] w-[70%] h-[65%] rounded-3xl border-4 -z-10" style={{ borderColor: '#130e0b', opacity: 0.2 }} />
