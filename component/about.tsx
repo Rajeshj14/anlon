@@ -7,84 +7,96 @@ import RevealOnScroll from './RevealOnScroll';
 const WhoWeAreSection = () => {
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
-  const [userInteracted, setUserInteracted] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
-  // First load - video play with mute (browser restriction)
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
+  // Separate refs for mobile and desktop
+  const mobileVideoRef = useRef<HTMLVideoElement>(null);
+  const desktopVideoRef = useRef<HTMLVideoElement>(null);
 
-    const playVideo = async () => {
-      try {
-        // Always start with mute (browser requirement)
-        video.muted = true;
-        setIsMuted(true);
-        
-        // Try to play
-        await video.play();
-        console.log('Video playing muted');
-        
-        // Check if user previously enabled sound
-        const soundEnabled = localStorage.getItem('anlons_sound_unlocked') === '1';
-        if (soundEnabled && userInteracted) {
-          // If they enabled before, unmute after play starts
-          setTimeout(() => {
-            video.muted = false;
-            video.volume = 1;
-            setIsMuted(false);
-          }, 100);
-        }
-      } catch (error) {
-        console.log('Autoplay failed:', error);
+  // Returns only the ACTIVE video based on screen size
+  const getActiveVideo = () => {
+    const isMobile = window.innerWidth < 1024;
+    return isMobile ? mobileVideoRef.current : desktopVideoRef.current;
+  };
+
+  // Pause the inactive video, play the active one
+  const syncVideos = () => {
+    const isMobile = window.innerWidth < 1024;
+    const mobile = mobileVideoRef.current;
+    const desktop = desktopVideoRef.current;
+    if (mobile && desktop) {
+      if (isMobile) {
+        desktop.pause();
+        mobile.play().catch(() => {});
+      } else {
+        mobile.pause();
+        desktop.play().catch(() => {});
       }
+    }
+  };
+
+  useEffect(() => {
+    // Sync on load and on resize
+    syncVideos();
+    window.addEventListener('resize', syncVideos);
+
+    const unlockSound = () => {
+      const v = getActiveVideo();
+      if (!v) return;
+      v.muted = false;
+      v.volume = 1;
+      setIsMuted(false);
+      localStorage.setItem('anlons_sound_unlocked', '1');
+      document.removeEventListener('click', unlockSound);
+      document.removeEventListener('touchstart', unlockSound);
     };
 
-    playVideo();
-  }, [userInteracted]);
-
-  // Global click handler to unmute once user interacts
-  useEffect(() => {
-    const handleUserInteraction = () => {
-      const video = videoRef.current;
-      if (!video) return;
-      
-      setUserInteracted(true);
-      
-      // Check if sound should be enabled
-      const soundEnabled = localStorage.getItem('anlons_sound_unlocked') === '1';
-      
-      if (soundEnabled) {
-        video.muted = false;
-        video.volume = 1;
-        setIsMuted(false);
+    if (localStorage.getItem('anlons_sound_unlocked') === '1') {
+      // Returning user — unmute active video on canplay
+      const v = getActiveVideo();
+      if (v) {
+        const unmute = () => { v.muted = false; v.volume = 1; setIsMuted(false); };
+        v.readyState >= 3 ? unmute() : v.addEventListener('canplay', unmute, { once: true });
       }
-      
-      // Remove listeners after first interaction
-      document.removeEventListener('click', handleUserInteraction);
-      document.removeEventListener('touchstart', handleUserInteraction);
-    };
-
-    document.addEventListener('click', handleUserInteraction);
-    document.addEventListener('touchstart', handleUserInteraction);
+    } else {
+      // First visit — unmute on first interaction
+      document.addEventListener('click', unlockSound);
+      document.addEventListener('touchstart', unlockSound);
+    }
 
     return () => {
-      document.removeEventListener('click', handleUserInteraction);
-      document.removeEventListener('touchstart', handleUserInteraction);
+      window.removeEventListener('resize', syncVideos);
+      document.removeEventListener('click', unlockSound);
+      document.removeEventListener('touchstart', unlockSound);
     };
   }, []);
 
   const toggleMute = () => {
-    const video = videoRef.current;
-    if (!video) return;
-    
-    video.muted = !video.muted;
-    setIsMuted(video.muted);
-    
-    if (!video.muted) {
-      localStorage.setItem('anlons_sound_unlocked', '1');
-    }
+    const v = getActiveVideo();
+    if (!v) return;
+    const next = !isMuted;
+    v.muted = next;
+    v.volume = next ? 0 : 1;
+    setIsMuted(next);
+    if (!next) localStorage.setItem('anlons_sound_unlocked', '1');
   };
+
+  const MuteButton = () => (
+    <button
+      onClick={toggleMute}
+      className="absolute bottom-3 right-3 z-20 flex items-center justify-center w-9 h-9 rounded-full bg-black/50 backdrop-blur-sm border border-white/20 text-white hover:bg-black/70 transition-all"
+      aria-label={isMuted ? 'Unmute' : 'Mute'}
+    >
+      {isMuted ? (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+        </svg>
+      ) : (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+        </svg>
+      )}
+    </button>
+  );
 
   const trustPoints = [
     'Doctor-led scalp & hair evaluation',
@@ -121,19 +133,20 @@ const WhoWeAreSection = () => {
           </RevealOnScroll>
 
           <RevealOnScroll direction="right" delay={150} duration={800}>
-            <div className="relative h-[350px] sm:h-[400px] w-full mb-6">
-              <div className="absolute top-0 right-0 w-[85%] h-[75%] rounded-2xl overflow-hidden shadow-2xl z-10 animate-float-up-down">
-                <img src="https://ik.imagekit.io/yvjqesbbx/public/DSC02295.JPG?updatedAt=1773305816255" alt="Doctor with baby" className="w-full h-full object-cover" />
+            <div className="relative h-[470px] sm:h-[400px] w-full mb-6">
+              <div className="absolute top-0 right-0 w-[100%] h-[100%] rounded-3xl overflow-hidden shadow-2xl z-10">
+                <video
+                  ref={mobileVideoRef}
+                  src="/script-10.mov"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
+                <MuteButton />
               </div>
-              <div
-                className="absolute bottom-0 left-0 rounded-2xl overflow-hidden shadow-2xl z-20 animate-float-left-right bg-orange-50"
-                style={{ width: '60%', height: '45%', maxHeight: '250px', padding: '6px' }}
-              >
-                <div className="w-full h-full rounded-xl overflow-hidden">
-                  <img src="https://ik.imagekit.io/yvjqesbbx/public/DSC02268.JPG?updatedAt=1773305811543" alt="Nurse with elderly patient" className="w-full h-full object-cover" />
-                </div>
-              </div>
-              <div className="absolute top-[8%] right-[4%] w-[70%] h-[60%] rounded-2xl border-4 -z-10" style={{ borderColor: '#130e0b', opacity: 0.2 }} />
+              <div className="absolute top-[10%] right-[5%] w-[70%] h-[65%] rounded-3xl border-4 -z-10" style={{ borderColor: '#130e0b', opacity: 0.2 }} />
             </div>
           </RevealOnScroll>
 
@@ -224,34 +237,16 @@ const WhoWeAreSection = () => {
           <RevealOnScroll direction="right" delay={200} duration={800}>
             <div className="relative h-[700px]">
               <div className="absolute top-0 right-0 w-[85%] h-[90%] rounded-3xl overflow-hidden shadow-2xl z-10 animate-float-up-down">
-
                 <video
-                  ref={videoRef}
+                  ref={desktopVideoRef}
                   src="/script-10.mov"
                   autoPlay
+                  muted
                   loop
                   playsInline
-                  muted={isMuted}
                   className="w-full h-full object-cover"
                 />
-
-                {/* Mute / Unmute toggle button */}
-                <button
-                  onClick={toggleMute}
-                  className="absolute bottom-3 right-3 z-20 flex items-center justify-center w-9 h-9 rounded-full bg-black/50 backdrop-blur-sm border border-white/20 text-white hover:bg-black/70 transition-all"
-                  aria-label={isMuted ? 'Unmute' : 'Mute'}
-                >
-                  {isMuted ? (
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
-                    </svg>
-                  ) : (
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-                    </svg>
-                  )}
-                </button>
-
+                <MuteButton />
               </div>
               <div className="absolute top-[10%] right-[5%] w-[70%] h-[65%] rounded-3xl border-4 -z-10" style={{ borderColor: '#130e0b', opacity: 0.2 }} />
             </div>
