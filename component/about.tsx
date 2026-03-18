@@ -243,7 +243,7 @@ const WhoWeAreSection = () => {
 
                 <video
                   ref={videoRef}
-                  src="/script-10.mov"
+                  src="/script-10.mp4"
                   autoPlay
                   loop
                   playsInline
