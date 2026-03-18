@@ -2,7 +2,7 @@
 'use client'
 
 import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { X, Clock, Calendar, Phone, Mail, User, MessageSquare } from 'lucide-react';
+import { X, Calendar, Phone, Mail, User, MessageSquare } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 // Define interface for form data
@@ -11,7 +11,6 @@ interface FormData {
   email: string;
   phone: string;
   date: string;
-  time: string;
   treatment: string;
   message: string;
   consent: boolean;
@@ -39,7 +38,6 @@ const BookingFormModal = ({
     email: '',
     phone: '',
     date: '',
-    time: '',
     treatment: '',
     message: '',
     consent: false
@@ -97,7 +95,6 @@ const BookingFormModal = ({
           treatment: formData.treatment,
           message: formData.message,
           preferredDate: formData.date,
-          preferredTime: formData.time,
           consent: formData.consent,
           source: 'Anlon Booking Form',
           formName: 'Anlon',
@@ -211,7 +208,7 @@ const BookingFormModal = ({
         </div>
 
         {/* Row 3: Date, Time & Treatment */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               <Calendar className="w-4 h-4 inline mr-1 text-[#9B7057]" />
@@ -224,22 +221,6 @@ const BookingFormModal = ({
               onChange={handleChange}
               required
               min={getTodayDate()}
-              disabled={isSubmitting}
-              className="w-full px-4 py-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9B7057] focus:border-transparent transition-all disabled:bg-gray-100 disabled:cursor-not-allowed"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              <Clock className="w-4 h-4 inline mr-1 text-[#9B7057]" />
-              Preferred Time <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="time"
-              name="time"
-              value={formData.time}
-              onChange={handleChange}
-              required
               disabled={isSubmitting}
               className="w-full px-4 py-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9B7057] focus:border-transparent transition-all disabled:bg-gray-100 disabled:cursor-not-allowed"
             />

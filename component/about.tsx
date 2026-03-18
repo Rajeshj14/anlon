@@ -1,11 +1,31 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import BookingFormModal from './contact-form';
 import RevealOnScroll from './RevealOnScroll'; // ✅ reusable animation component
 
 const WhoWeAreSection = () => {
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const tryUnmute = () => {
+      video.muted = false;
+      setIsMuted(false);
+    };
+    video.addEventListener('playing', tryUnmute, { once: true });
+    return () => video.removeEventListener('playing', tryUnmute);
+  }, []);
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted;
+      setIsMuted(videoRef.current.muted);
+    }
+  };
 
 
 
@@ -166,17 +186,40 @@ const WhoWeAreSection = () => {
           {/* Right - Images slide from right */}
           <RevealOnScroll direction="right" delay={200} duration={800}>
             <div className="relative h-[700px]">
-              <div className="absolute top-0 right-0 w-[85%] h-[80%] rounded-3xl overflow-hidden shadow-2xl z-10 animate-float-up-down">
-                <img src="https://ik.imagekit.io/yvjqesbbx/public/DSC02295.JPG?updatedAt=1773305816255" alt="Doctor with baby" className="w-full h-full object-cover" />
+              <div className="absolute top-0 right-0 w-[85%] h-[90%] rounded-3xl overflow-hidden shadow-2xl z-10 animate-float-up-down">
+                <video
+                  ref={videoRef}
+                  src="/script-10.mov"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
+                <button
+                  onClick={toggleMute}
+                  className="absolute bottom-3 right-3 z-20 flex items-center justify-center w-9 h-9 rounded-full bg-black/50 backdrop-blur-sm border border-white/20 text-white hover:bg-black/70 transition-all"
+                  aria-label={isMuted ? "Unmute" : "Mute"}
+                >
+                  {isMuted ? (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+                    </svg>
+                  ) : (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                    </svg>
+                  )}
+                </button>
               </div>
-              <div
+              {/* <div
                 className="absolute bottom-0 left-0 rounded-3xl overflow-hidden shadow-2xl z-20 animate-float-left-right bg-orange-50"
                 style={{ width: '60%', height: '55%', padding: '8px' }}
               >
                 <div className="w-full h-full rounded-2xl overflow-hidden">
                   <img src="https://ik.imagekit.io/yvjqesbbx/public/C6274T01.jpeg?updatedAt=1773305802807" alt="Nurse with elderly patient" className="w-full h-full object-cover" />
                 </div>
-              </div>
+              </div> */}
               <div className="absolute top-[10%] right-[5%] w-[70%] h-[65%] rounded-3xl border-4 -z-10" style={{ borderColor: '#130e0b', opacity: 0.2 }} />
             </div>
           </RevealOnScroll>
