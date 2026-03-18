@@ -339,7 +339,7 @@ export default function SkinTreatments() {
         }
       `}</style>
 
-      <section id="skin-treatments" ref={sectionRef} className="sk-root" style={{ background:"#080808", padding: "64px 16px" }}>
+      <section id="skin-treatments" ref={sectionRef} className="sk-root max-sm:py-5" style={{ background:"#080808", padding: "64px 16px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
 
           {/* ── Header ── */}

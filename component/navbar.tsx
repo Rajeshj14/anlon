@@ -345,7 +345,7 @@ export default function Navbar() {
             <div className="nb-mobile-divider" />
             <Link
               href="#"
-              className="btn-cta nb-mobile-cta"
+              className="btn-cta flex justify-center"
               onClick={() => { setMenuOpen(false); window.dispatchEvent(new CustomEvent("open-booking-modal")); }}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none">

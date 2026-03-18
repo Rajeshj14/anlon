@@ -18,7 +18,7 @@ const WhoWeAreSection = () => {
   ];
 
   return (
-    <section className="py-12 sm:py-14 md:py-16 px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24">
+    <section className="py-5 sm:py-14 md:py-16 px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24">
       <style>{`
         @keyframes floatUpDown {
           0%, 100% { transform: translateY(0px); }
@@ -90,7 +90,7 @@ const WhoWeAreSection = () => {
           <RevealOnScroll direction="left" delay={300} duration={700}>
 <div className="flex sm:flex-row gap-3">
   <button
-    className="group border-1 border-black flex items-center justify-center gap-2 text-black font-bold px-6 py-3 rounded-lg transition-all duration-300 hover:brightness-110 shadow-lg hover:shadow-xl text-sm w-full sm:w-auto"
+    className="group border-1 border-black flex items-center justify-center gap-2 text-black font-bold px-6 py-3 rounded-full w-full transition-all duration-300 hover:brightness-110 shadow-lg hover:shadow-xl text-sm sm:w-auto"
     onClick={() => setIsBookingModalOpen(true)}
   >
     Book Now
@@ -101,7 +101,7 @@ const WhoWeAreSection = () => {
     className="flex w-full sm:w-auto"
   >
     <button
-      className="group flex items-center justify-center gap-2 text-white font-bold px-6 py-3 rounded-lg transition-all duration-300 hover:brightness-110 shadow-lg hover:shadow-xl text-sm w-full"
+      className="btn-cta w-full flex justify-center"
       style={{ backgroundColor: '#9B7057' }}
     >
       Call Now

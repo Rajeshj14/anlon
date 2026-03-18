@@ -157,7 +157,7 @@ const HairSpecialistComponent = () => {
             .vs-cta-strip { padding: 24px 20px; flex-direction: column; align-items: flex-start; }
             .vs-call-wrapper { display: block; }
             .vs-cta-buttons { width: 100%; }
-            .vs-btn-primary, .vs-btn-secondary { flex: 1; justify-content: center; }
+            .btn-cta, .vs-btn-secondary { flex: 1; justify-content: center; }
           }
         `}</style>
         <div className="w-full px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24 py-10 sm:py-12 md:py-14 lg:py-10">
@@ -339,7 +339,7 @@ const HairSpecialistComponent = () => {
                             </div>
                         </div>
                         <h1 className="text-xl sm:text-2xl font-bold text-[#9B7057] leading-tight uppercase tracking-tight mb-3">
-                            MEET YOUR HAIR SPECIALIST
+                          GET PROFESSIONAL HAIR TREATMENT ADVICE
                         </h1>
                         <h2 className="text-xl sm:text-2xl font-bold text-black mb-4">Dr. Nisha R. Srinivas</h2>
                     </RevealOnScroll>
@@ -434,7 +434,7 @@ const HairSpecialistComponent = () => {
                   <a
                     href="#"
                     onClick={e => { e.preventDefault(); window.dispatchEvent(new CustomEvent("open-booking-modal")); }}
-                    className="vs-btn-primary"
+                    className="btn-cta"
                   >
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
                       <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C9.61 21 3 14.39 3 6a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.25 1.01l-2.2 2.2z" fill="white"/>

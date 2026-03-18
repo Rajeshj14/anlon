@@ -368,13 +368,13 @@ export default function HairTreatmentProcedure() {
         }
       `}</style>
 
-      <section className="htp-root htp-section py-16 lg:py-14">
+      <section className="htp-root htp-section py-10 lg:py-14">
         <div className="htp-section-grid" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           {/* ── Header ── */}
-          <div className="text-center mb-12">
+          <div className="text-center max-sm:mb-6 mb-12">
             <span className="htp-eyebrow">
               <span className="htp-eyebrow-dot" />
               How It Works
@@ -440,7 +440,7 @@ export default function HairTreatmentProcedure() {
           </div>
 
           {/* ── CTA ── */}
-          <div className="text-center mt-14">
+          <div className="text-center max-sm:mt-6 mt-14">
             <p style={{ fontSize: 13, color: "#9ca3af", marginBottom: 18, fontWeight: 500, letterSpacing: "0.3px" }}>
               Begin your personalised hair restoration journey today
             </p>
