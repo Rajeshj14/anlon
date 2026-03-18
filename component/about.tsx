@@ -7,49 +7,57 @@ import RevealOnScroll from './RevealOnScroll';
 const WhoWeAreSection = () => {
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
+  const [isVideoReady, setIsVideoReady] = useState(false); // Add this
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
+    if (!video || isVideoReady) return; // Prevent multiple executions
 
-    // Function to play video with proper sound settings
     const setupVideo = async () => {
       try {
-        // Check if user already enabled sound before
         const soundEnabled = localStorage.getItem('anlons_sound_unlocked') === '1';
         
+        // Set initial state
         if (soundEnabled) {
-          // If sound was enabled before, play with sound immediately
           video.muted = false;
           video.volume = 1;
           setIsMuted(false);
         } else {
-          // First time user - muted by default
           video.muted = true;
           setIsMuted(true);
         }
         
-        // Try to play video
-        await video.play();
-        
-        // Double-check sound state after play starts
-        if (soundEnabled) {
-          video.muted = false;
-          video.volume = 1;
-        }
+        // Try to play with a small delay to avoid race conditions
+        setTimeout(async () => {
+          try {
+            await video.play();
+            setIsVideoReady(true);
+          } catch (error) {
+            console.log('Play failed:', error);
+            setIsVideoReady(true);
+          }
+        }, 100);
         
       } catch (error) {
-        console.log('Autoplay prevented by browser:', error);
-        // If autoplay fails, ensure it's muted
-        video.muted = true;
-        setIsMuted(true);
+        console.log('Setup error:', error);
+        setIsVideoReady(true);
       }
     };
 
     setupVideo();
 
-    // Handle first-time user interaction to enable sound
+    // Clean up function
+    return () => {
+      setIsVideoReady(false);
+    };
+  }, [isVideoReady]); // Add dependency
+
+  // Separate useEffect for interaction to avoid loop
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !isVideoReady) return;
+
     const handleFirstInteraction = async () => {
       const soundEnabled = localStorage.getItem('anlons_sound_unlocked') === '1';
       
@@ -59,7 +67,6 @@ const WhoWeAreSection = () => {
         setIsMuted(false);
         localStorage.setItem('anlons_sound_unlocked', '1');
         
-        // Ensure video plays after unmute
         try {
           if (video.paused) {
             await video.play();
@@ -70,16 +77,14 @@ const WhoWeAreSection = () => {
       }
     };
 
-    // Add event listeners for first interaction
     document.addEventListener('click', handleFirstInteraction, { once: true });
     document.addEventListener('touchstart', handleFirstInteraction, { once: true });
 
-    // Cleanup
     return () => {
       document.removeEventListener('click', handleFirstInteraction);
       document.removeEventListener('touchstart', handleFirstInteraction);
     };
-  }, []);
+  }, [isVideoReady]); // Add dependency
 
   const toggleMute = () => {
     const video = videoRef.current;
@@ -92,7 +97,6 @@ const WhoWeAreSection = () => {
       localStorage.setItem('anlons_sound_unlocked', '1');
     }
     
-    // Ensure video keeps playing
     if (video.paused) {
       video.play().catch(e => console.log('Play failed:', e));
     }
@@ -243,7 +247,7 @@ const WhoWeAreSection = () => {
                   autoPlay
                   loop
                   playsInline
-                  muted={isMuted}  // This is controlled by state now
+                  muted={isMuted}
                   className="w-full h-full object-cover"
                 />
 
