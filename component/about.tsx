@@ -7,84 +7,72 @@ import RevealOnScroll from './RevealOnScroll';
 const WhoWeAreSection = () => {
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
-  const [isVideoReady, setIsVideoReady] = useState(false); // Add this
+  const [userInteracted, setUserInteracted] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  // First load - video play with mute (browser restriction)
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || isVideoReady) return; // Prevent multiple executions
+    if (!video) return;
 
-    const setupVideo = async () => {
+    const playVideo = async () => {
       try {
+        // Always start with mute (browser requirement)
+        video.muted = true;
+        setIsMuted(true);
+        
+        // Try to play
+        await video.play();
+        console.log('Video playing muted');
+        
+        // Check if user previously enabled sound
         const soundEnabled = localStorage.getItem('anlons_sound_unlocked') === '1';
-        
-        // Set initial state
-        if (soundEnabled) {
-          video.muted = false;
-          video.volume = 1;
-          setIsMuted(false);
-        } else {
-          video.muted = true;
-          setIsMuted(true);
+        if (soundEnabled && userInteracted) {
+          // If they enabled before, unmute after play starts
+          setTimeout(() => {
+            video.muted = false;
+            video.volume = 1;
+            setIsMuted(false);
+          }, 100);
         }
-        
-        // Try to play with a small delay to avoid race conditions
-        setTimeout(async () => {
-          try {
-            await video.play();
-            setIsVideoReady(true);
-          } catch (error) {
-            console.log('Play failed:', error);
-            setIsVideoReady(true);
-          }
-        }, 100);
-        
       } catch (error) {
-        console.log('Setup error:', error);
-        setIsVideoReady(true);
+        console.log('Autoplay failed:', error);
       }
     };
 
-    setupVideo();
+    playVideo();
+  }, [userInteracted]);
 
-    // Clean up function
-    return () => {
-      setIsVideoReady(false);
-    };
-  }, [isVideoReady]); // Add dependency
-
-  // Separate useEffect for interaction to avoid loop
+  // Global click handler to unmute once user interacts
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video || !isVideoReady) return;
-
-    const handleFirstInteraction = async () => {
+    const handleUserInteraction = () => {
+      const video = videoRef.current;
+      if (!video) return;
+      
+      setUserInteracted(true);
+      
+      // Check if sound should be enabled
       const soundEnabled = localStorage.getItem('anlons_sound_unlocked') === '1';
       
-      if (!soundEnabled) {
+      if (soundEnabled) {
         video.muted = false;
         video.volume = 1;
         setIsMuted(false);
-        localStorage.setItem('anlons_sound_unlocked', '1');
-        
-        try {
-          if (video.paused) {
-            await video.play();
-          }
-        } catch (e) {
-          console.log('Play after interaction failed:', e);
-        }
       }
+      
+      // Remove listeners after first interaction
+      document.removeEventListener('click', handleUserInteraction);
+      document.removeEventListener('touchstart', handleUserInteraction);
     };
 
-    document.addEventListener('click', handleFirstInteraction, { once: true });
-    document.addEventListener('touchstart', handleFirstInteraction, { once: true });
+    document.addEventListener('click', handleUserInteraction);
+    document.addEventListener('touchstart', handleUserInteraction);
 
     return () => {
-      document.removeEventListener('click', handleFirstInteraction);
-      document.removeEventListener('touchstart', handleFirstInteraction);
+      document.removeEventListener('click', handleUserInteraction);
+      document.removeEventListener('touchstart', handleUserInteraction);
     };
-  }, [isVideoReady]); // Add dependency
+  }, []);
 
   const toggleMute = () => {
     const video = videoRef.current;
@@ -95,10 +83,6 @@ const WhoWeAreSection = () => {
     
     if (!video.muted) {
       localStorage.setItem('anlons_sound_unlocked', '1');
-    }
-    
-    if (video.paused) {
-      video.play().catch(e => console.log('Play failed:', e));
     }
   };
 
@@ -243,7 +227,7 @@ const WhoWeAreSection = () => {
 
                 <video
                   ref={videoRef}
-                  src="/script-10.mp4"
+                  src="/script-10.mov"
                   autoPlay
                   loop
                   playsInline
