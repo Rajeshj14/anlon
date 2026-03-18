@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx prisma:*)"
+      "Bash(npx prisma:*)",
+      "Bash(ffmpeg -version)",
+      "Bash(where ffmpeg:*)",
+      "Bash(where HandBrakeCLI)"
     ]
   }
 }
