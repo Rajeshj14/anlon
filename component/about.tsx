@@ -18,50 +18,50 @@ const WhoWeAreSection = () => {
     return isMobile ? mobileVideoRef.current : desktopVideoRef.current;
   };
 
-  // Pause the inactive video, play the active one
+  const tryPlayWithSound = async (video: HTMLVideoElement) => {
+    video.muted = false;
+    video.volume = 1;
+    try {
+      await video.play();
+      setIsMuted(false);
+    } catch {
+      // Browser blocked unmuted autoplay — fall back to muted
+      video.muted = true;
+      video.play().catch(() => {});
+      setIsMuted(true);
+    }
+  };
+
   const syncVideos = () => {
     const isMobile = window.innerWidth < 1024;
     const mobile = mobileVideoRef.current;
     const desktop = desktopVideoRef.current;
-    if (mobile && desktop) {
-      if (isMobile) {
-        desktop.pause();
-        mobile.play().catch(() => {});
-      } else {
-        mobile.pause();
-        desktop.play().catch(() => {});
-      }
+    if (!mobile || !desktop) return;
+    if (isMobile) {
+      desktop.pause();
+      tryPlayWithSound(mobile);
+    } else {
+      mobile.pause();
+      tryPlayWithSound(desktop);
     }
   };
 
   useEffect(() => {
-    // Sync on load and on resize
     syncVideos();
     window.addEventListener('resize', syncVideos);
 
+    // Unmute on any user interaction (covers browsers that block autoplay with sound)
     const unlockSound = () => {
       const v = getActiveVideo();
       if (!v) return;
       v.muted = false;
       v.volume = 1;
       setIsMuted(false);
-      localStorage.setItem('anlons_sound_unlocked', '1');
       document.removeEventListener('click', unlockSound);
       document.removeEventListener('touchstart', unlockSound);
     };
-
-    if (localStorage.getItem('anlons_sound_unlocked') === '1') {
-      // Returning user — unmute active video on canplay
-      const v = getActiveVideo();
-      if (v) {
-        const unmute = () => { v.muted = false; v.volume = 1; setIsMuted(false); };
-        v.readyState >= 3 ? unmute() : v.addEventListener('canplay', unmute, { once: true });
-      }
-    } else {
-      // First visit — unmute on first interaction
-      document.addEventListener('click', unlockSound);
-      document.addEventListener('touchstart', unlockSound);
-    }
+    document.addEventListener('click', unlockSound);
+    document.addEventListener('touchstart', unlockSound);
 
     return () => {
       window.removeEventListener('resize', syncVideos);
@@ -139,7 +139,6 @@ const WhoWeAreSection = () => {
                   ref={mobileVideoRef}
                   src="/script-10.mov"
                   autoPlay
-                  muted
                   loop
                   playsInline
                   className="w-full h-full object-cover"
@@ -241,7 +240,6 @@ const WhoWeAreSection = () => {
                   ref={desktopVideoRef}
                   src="/script-10.mov"
                   autoPlay
-                  muted
                   loop
                   playsInline
                   className="w-full h-full object-cover"

@@ -35,7 +35,7 @@ const CARDS = [
     tagColor: "#f2a0b5",
     tagBg: "rgba(242,160,181,0.12)",
     tagBorder: "rgba(242,160,181,0.35)",
-    video: "script-10.mov",
+    video: "/script-10.mov",
   },
   {
     id: 4,
@@ -46,7 +46,7 @@ const CARDS = [
     tagColor: "#f2a0b5",
     tagBg: "rgba(242,160,181,0.12)",
     tagBorder: "rgba(242,160,181,0.35)",
-    video: "script-11.mov",
+    video: "/script-11.mov",
   },
 ];
 
