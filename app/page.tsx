@@ -26,7 +26,7 @@ export default function page() {
 
       <HealthcareFeaturesSection />
       {/* <ClinicVideosSection /> */}
-      <MedicalServicesComponent />
+      {/* <MedicalServicesComponent /> */}
       <FAQSection />
       <IframeTwoColumnSection />
       {/* <FurtherQuestionsBanner />   */}

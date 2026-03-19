@@ -8,7 +8,7 @@ const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "Treatments", href: "#anlon-treatments" },
   { label: "Doctor", href: "#doctor" },
-  { label: "Our Teams", href: "#our-teams" },
+  { label: "Procedure", href: "#procedure" },
   { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#contact" },
 ];

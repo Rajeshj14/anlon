@@ -99,11 +99,12 @@ const WhoWeAreSection = () => {
   );
 
   const trustPoints = [
-    'Doctor-led scalp & hair evaluation',
-    'Personalised medical planning',
+    'Doctor-led scalp & follicle evaluation',
+    'Personalised regenerative treatment planning',
     'Ethical, non-aggressive approach',
+    'Advanced, non-surgical restoration technique',
     'Follow-up and progress monitoring',
-    'No over-pitch or unnecessary procedures',
+    'No unnecessary or unsuitable procedures'
   ];
 
   return (
@@ -128,7 +129,7 @@ const WhoWeAreSection = () => {
 
           <RevealOnScroll direction="left" duration={700}>
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight max-sm:mb-10 mb-4">
-              Trusted Hair Loss Clinic in Chennai — Medical, Ethical, Result-Focused
+              Regenera Activa - New Revolution Treatment in Hair Care Industry
             </h2>
           </RevealOnScroll>
 
@@ -152,10 +153,10 @@ const WhoWeAreSection = () => {
           <RevealOnScroll direction="left" delay={200} duration={700}>
             <div className="space-y-4 mb-4">
               <p className="text-gray-600 text-base leading-relaxed">
-                At Anlon Aesthetics, hair treatments are approached medically, not commercially. Every patient is first evaluated for hair loss pattern, scalp condition, and follicle activity before any recommendation is made.
+                At Anlon Aesthetics, Regenera Activa is approached as a medical hair restoration solution, not a promotional treatment. Every patient undergoes a detailed scalp and follicle evaluation before determining whether this advanced regenerative procedure is suitable.
               </p>
               <p className="text-gray-600 text-base leading-relaxed">
-                Our focus is on clarity, safety, and long-term outcomes, ensuring that the treatment chosen truly matches your hair loss stage.
+                Our focus is on precision, safety, and realistic outcomes, helping you choose the right treatment based on clinical need.
               </p>
             </div>
           </RevealOnScroll>
@@ -180,7 +181,7 @@ const WhoWeAreSection = () => {
                 Book Now
               </button>
               <a href="tel:+91 9500653243" className="flex w-full sm:w-auto">
-                <button className="btn-cta w-full flex justify-center" style={{ backgroundColor: '#9B7057' }}>
+                <button className="btn-cta nb-cta" style={{ backgroundColor: '#9B7057' }}>
                   Call Now
                 </button>
               </a>
@@ -194,14 +195,14 @@ const WhoWeAreSection = () => {
           <RevealOnScroll direction="left" duration={800}>
             <div className="space-y-2">
               <h2 className="text-5xl font-bold text-gray-900">
-                Trusted Hair Loss Clinic in Chennai — Medical, Ethical, Result-Focused
+                Regenera Activa - New Revolution Treatment in Hair Care Industry
               </h2>
               <div className="space-y-4">
                 <p className="text-gray-600 text-lg leading-relaxed">
-                  At Anlon Aesthetics, hair treatments are approached medically, not commercially. Every patient is first evaluated for hair loss pattern, scalp condition, and follicle activity before any recommendation is made.
+                  At Anlon Aesthetics, Regenera Activa is approached as a medical hair restoration solution, not a promotional treatment. Every patient undergoes a detailed scalp and follicle evaluation before determining whether this advanced regenerative procedure is suitable.
                 </p>
                 <p className="text-gray-600 text-lg leading-relaxed">
-                  Our focus is on clarity, safety, and long-term outcomes, ensuring that the treatment chosen truly matches your hair loss stage.
+                  Our focus is on precision, safety, and realistic outcomes, helping you choose the right treatment based on clinical need.
                 </p>
               </div>
 
@@ -216,14 +217,14 @@ const WhoWeAreSection = () => {
 
               <div className="flex flex-wrap gap-4 pt-4">
                 <button
-                  className="group border-1 border-black flex items-center justify-center gap-2 text-black font-bold px-6 py-3 rounded-lg transition-all duration-300 hover:brightness-110 shadow-lg hover:shadow-xl text-sm w-full sm:w-auto"
+                  className="group border-1 border-black flex items-center justify-center gap-2 text-black font-bold px-6 py-3 rounded-full transition-all duration-300 hover:brightness-110 shadow-lg hover:shadow-xl text-sm w-full sm:w-auto"
                   onClick={() => setIsBookingModalOpen(true)}
                 >
-                  Book Now
+                  Book Your Consultation
                 </button>
                 <a href="tel:+91 9500653243" className="flex w-full sm:w-auto">
                   <button
-                    className="group flex items-center justify-center gap-2 text-white font-bold px-6 py-3 rounded-lg transition-all duration-300 hover:brightness-110 shadow-lg hover:shadow-xl text-sm w-full"
+                    className="btn-cta nb-cta"
                     style={{ backgroundColor: '#9B7057' }}
                   >
                     Call Now
