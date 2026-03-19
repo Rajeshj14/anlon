@@ -177,10 +177,15 @@ export default function CosBeforeAfterSection() {
           .ba-arrow-side { display: none !important; }
           .ba-bottom-nav { display: flex !important; }
         }
+        @media (max-width: 640px) {
+          .ba-main-heading { font-size: 22px !important; }
+          .ba-accent-heading { font-size: 20px !important; }
+          .ba-header-desc { font-size: 14px !important; }
+        }
       `}</style>
 
       <section className="ba-wrap max-sm:py-5 max-sm:mb-5 py-10" style={{ background: "linear-gradient(180deg, #0d0b0e 0%, #120e0b 100%)" }}>
-        <div className="max-w-6xl mx-auto px-6">
+        <div className="ba-carousel-outer max-w-6xl mx-auto px-6">
 
           {/* Title */}
           {/* <motion.h2
@@ -200,13 +205,13 @@ export default function CosBeforeAfterSection() {
                 </span>
                 <div className="ba-eyebrow-r" />
               </div>
-              <h2 style={{ fontSize: "clamp(30px,5vw,48px)", fontWeight: 700, color: "#ffffff", lineHeight: 1.2, margin: "0 0 4px" }}>
+              <h2 className="ba-main-heading" style={{ fontSize: "clamp(30px,5vw,48px)", fontWeight: 700, color: "#ffffff", lineHeight: 1.2, margin: "0 0 4px" }}>
                 Before / After Gallery
               </h2>
-              <h2 className="ba-italic-accent" style={{ fontSize: "clamp(28px,4.5vw,44px)", lineHeight: 1.25, margin: "0 0 8px" }}>
+              <h2 className="ba-italic-accent ba-accent-heading" style={{ fontSize: "clamp(28px,4.5vw,44px)", lineHeight: 1.25, margin: "0 0 8px" }}>
                 Hear from our Hair specialist
               </h2>
-              <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 15, maxWidth: 780, lineHeight: 1.7, margin: "0 auto" }}>
+              <p className="ba-header-desc" style={{ color: "rgba(255,255,255,0.45)", fontSize: 15, maxWidth: 780, lineHeight: 1.7, margin: "0 auto" }}>
                 Precision Treatments. Real Results.Because Hair Loss Needs the Right Diagnosis
               </p>
             </div>

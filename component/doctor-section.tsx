@@ -158,9 +158,13 @@ const HairSpecialistComponent = () => {
             .vs-call-wrapper { display: block; }
             .vs-cta-buttons { width: 100%; }
             .btn-cta, .vs-btn-secondary { flex: 1; justify-content: center; }
+            .vs-cta-heading { font-size: 16px; }
+            .vs-cta-sub { font-size: 14px; }
+            .vs-section-heading { font-size: 1.5rem !important; }
+            .vs-section-desc { font-size: 14px !important; }
           }
         `}</style>
-        <div className="w-full px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24 py-10 sm:py-12 md:py-14 lg:py-10">
+        <div id='doctor' className="w-full px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24 py-10 sm:py-12 md:py-14 lg:py-10">
             <div className="max-w-7xl mx-auto">
 
                 {/* ── Section Header ── */}
@@ -185,7 +189,7 @@ const HairSpecialistComponent = () => {
                       <div style={{ height: 1, width: 52, background: "linear-gradient(90deg, #9B7057, transparent)" }} />
                     </div>
 
-                    <h2 style={{
+                    <h2 className="vs-section-heading" style={{
                       fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)",
                       fontWeight: 900, color: "#1a1a1a",
                       marginTop: 0, marginBottom: 12,
@@ -196,7 +200,7 @@ const HairSpecialistComponent = () => {
                       <br />Your Hair Transformation
                     </h2>
 
-                    <p style={{
+                    <p className="vs-section-desc" style={{
                       fontSize: 15, color: "#6b7280",
                       maxWidth: 780, margin: "0 auto",
                       lineHeight: 1.75, fontWeight: 400,
@@ -271,8 +275,8 @@ const HairSpecialistComponent = () => {
                                         <circle cx="37" cy="15" r="2" fill="currentColor"/>
                                     </svg>
                                     <div>
-                                        <h3 className="text-lg font-bold text-black uppercase leading-snug mb-2">HAIR-ALIGNED PROFILE</h3>
-                                        <p className="text-gray-600 text-base leading-relaxed">
+                                        <h3 className="text-xl font-bold text-black uppercase leading-snug mb-2">HAIR-ALIGNED PROFILE</h3>
+                                        <p className="text-gray-600 md:text-lg leading-relaxed">
                                             Dr. Nisha has 12 years of overall medical experience, with 7+ years specialising in dermatology and medical aesthetics, including extensive experience in hair loss diagnosis, scalp disorders, and hair restoration planning.
                                         </p>
                                     </div>
@@ -296,7 +300,7 @@ const HairSpecialistComponent = () => {
                                         <circle cx="37" cy="15" r="2" fill="currentColor"/>
                                     </svg>
                                     <div>
-                                        <p className="text-gray-600 text-base leading-relaxed">
+                                        <p className="text-gray-600 text-lg leading-relaxed">
                                             Her approach to hair treatment focuses on understanding the root cause of hair loss, recommending stage-appropriate solutions, and ensuring long-term scalp and follicle health rather than short-term cosmetic fixes.
                                         </p>
                                     </div>
@@ -309,7 +313,7 @@ const HairSpecialistComponent = () => {
                         <div className="relative">
                             <div className="w-full h-[600px] bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg overflow-hidden">
                                 <img
-                                    src="https://ik.imagekit.io/yvjqesbbx/public/doctored.jpeg?updatedAt=1773305802193"
+                                    src="https://ik.imagekit.io/xivdiehvf/doctored.jpeg"
                                     alt="Dr. Nisha R. Srinivas - Hair Specialist"
                                     className="w-full h-full object-cover dr-img-float"
                                 />
@@ -349,7 +353,7 @@ const HairSpecialistComponent = () => {
                         <div className="relative mb-6">
                             <div className="w-full h-[300px] sm:h-[350px] md:h-[400px] bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg overflow-hidden">
                                 <img
-                                    src="https://ik.imagekit.io/yvjqesbbx/public/doctored.jpeg?updatedAt=1773305802193"
+                                    src="https://ik.imagekit.io/xivdiehvf/doctored.jpeg"
                                     alt="Dr. Nisha R. Srinivas - Hair Specialist"
                                     className="w-full h-full object-cover dr-img-float"
                                 />
@@ -365,7 +369,7 @@ const HairSpecialistComponent = () => {
 
                     {/* Designation - from left */}
                     <RevealOnScroll direction="left" delay={200} duration={700}>
-                        <p className="text-gray-600 text-sm sm:text-base leading-relaxed mb-4">
+                        <p className="text-gray-600 text-base leading-relaxed mb-4">
                             Dermatosurgeon | Dermatologist | Venereologist | Leprologist<br className="hidden sm:block"/>
                             Aesthetic Physician & Clinical Lead – Anlon Skin & Aesthetics
                         </p>
@@ -389,7 +393,7 @@ const HairSpecialistComponent = () => {
                             </svg>
                             <div>
                                 <h3 className="text-sm sm:text-base font-bold text-black uppercase leading-snug mb-1">HAIR-ALIGNED PROFILE</h3>
-                                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                                <p className="text-gray-600 text-sm leading-relaxed">
                                     Dr. Nisha has 12 years of overall medical experience, with 7+ years specialising in dermatology and medical aesthetics, including extensive experience in hair loss diagnosis, scalp disorders, and hair restoration planning.
                                 </p>
                             </div>
@@ -413,7 +417,7 @@ const HairSpecialistComponent = () => {
                                 <circle cx="37" cy="15" r="2" fill="currentColor"/>
                             </svg>
                             <div>
-                                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                                <p className="text-gray-600 text-sm leading-relaxed">
                                     Her approach to hair treatment focuses on understanding the root cause of hair loss, recommending stage-appropriate solutions, and ensuring long-term scalp and follicle health rather than short-term cosmetic fixes.
                                 </p>
                             </div>
@@ -442,7 +446,7 @@ const HairSpecialistComponent = () => {
                     Book Your Consultation
                   </a>
                   <div className="vs-call-wrapper">
-                    <a href="tel:+916385083099" className="vs-btn-secondary">
+                    <a href="tel:+919500653243" className="vs-btn-secondary">
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
                         <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C9.61 21 3 14.39 3 6a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.25 1.01l-2.2 2.2z" fill="#f5f0eb"/>
                       </svg>

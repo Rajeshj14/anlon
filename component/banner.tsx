@@ -437,6 +437,14 @@ export default function SkinHeroSection() {
           .sh-badge-grid { grid-template-columns: 1fr; }
           .sh-card { padding: 24px 18px; }
           .sh-cta-primary, .sh-cta-secondary { font-size: 13px; padding: 12px 20px; }
+          .sh-card-title { font-size: 18px; }
+          .sh-card-sub { font-size: 14px; }
+          .sh-headline { font-size: 1.5rem; }
+          .sh-tagline { font-size: 11px; }
+          .sh-rating-score { font-size: 16px; }
+          .sh-rating-label { font-size: 14px; }
+          .sh-badge { font-size: 14px; }
+          .sh-subtext { font-size: 14px !important; }
         }
 
         @media (min-width: 641px) {
@@ -473,7 +481,7 @@ export default function SkinHeroSection() {
                     <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
                   </svg>
                   {/* <span style={{ color: "rgba(155,112,87,0.7)", fontWeight: 800 }}>·</span> */}
-                 Nungabakkam , Kottupuram
+                 Nungambakkam, Kotturpuram
                 </span>
               </div>
 
@@ -490,7 +498,7 @@ export default function SkinHeroSection() {
               </h1>
 
               {/* Subtext */}
-              <p style={{ color: "rgba(255,255,255,0.52)", fontSize: 15, lineHeight: 1.75, maxWidth: 480, fontWeight: 400 }}>
+              <p className="sh-subtext" style={{ color: "rgba(255,255,255,0.52)", fontSize: 15, lineHeight: 1.75, maxWidth: 480, fontWeight: 400 }}>
                 Personalised hair treatments by experienced dermatologists, combining advanced hair restoration with doctor-led care for hair loss, thinning, and baldness.
               </p>
 
@@ -531,7 +539,7 @@ export default function SkinHeroSection() {
                 >
                   Book Your Consultation
                 </a>
-                <a href="tel:+916385083099" className="sh-cta-secondary sh-cta-mobile-only">
+                <a href="tel:+919500653243" className="sh-cta-secondary sh-cta-mobile-only">
                   <svg className="sh-cta-icon" style={{ width: 16, height: 16 }} fill="currentColor" viewBox="0 0 24 24">
                     <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
                   </svg>

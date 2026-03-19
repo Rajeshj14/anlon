@@ -107,7 +107,7 @@ const WhoWeAreSection = () => {
   ];
 
   return (
-    <section className="py-5 sm:py-14 md:py-16 px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24">
+    <section className="py-5  md:pt-14 px-4 sm:px-6 md:px-8 lg:px-16 xl:px-24">
       <style>{`
         @keyframes floatUpDown {
           0%, 100% { transform: translateY(0px); }

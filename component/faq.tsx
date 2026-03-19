@@ -35,7 +35,7 @@ const FAQSection = () => {
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight max-sm:mb-2" style={{ color: '#9B7057' }}>
                 Common Questions Before Booking
               </h2>
-              <p className="text-sm sm:text-base text-gray-600 leading-relaxed max-sm:mb-0">
+              <p className="text-sm text-gray-600 leading-relaxed max-sm:mb-0">
                 We understand you may have questions before starting your hair restoration journey. Here are answers to the most common concerns.
               </p>
 
@@ -51,7 +51,7 @@ const FAQSection = () => {
                         }`}
                         style={openIndex === index ? { backgroundColor: '#F5E6D3' } : {}}
                       >
-                        <span className="text-xs sm:text-sm md:text-base tracking-wide pr-2">{faq.question}</span>
+                        <span className="text-sm md:text-base tracking-wide pr-2">{faq.question}</span>
                         <svg
                           className={`w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-300 flex-shrink-0 ${openIndex === index ? 'rotate-180' : ''}`}
                           fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -64,7 +64,7 @@ const FAQSection = () => {
                         </svg>
                       </button>
                       <div className={`transition-all duration-300 ease-in-out overflow-hidden ${openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
-                        <div className="px-4 sm:px-6 py-4 sm:py-6 bg-white text-gray-700 text-sm sm:text-base leading-relaxed">
+                        <div className="px-4 sm:px-6 py-4 sm:py-6 bg-white text-gray-700 text-sm leading-relaxed">
                           {faq.answer}
                         </div>
                       </div>
@@ -98,11 +98,11 @@ const FAQSection = () => {
                     <p className="text-black text-[10px] sm:text-xs md:text-sm lg:text-base leading-relaxed hidden sm:block">
                       Schedule a detailed hair and scalp evaluation with our specialists. Get personalized treatment recommendations based on your condition.
                     </p>
-                    <p className="text-black text-[9px] leading-tight sm:hidden">Schedule evaluation with specialists</p>
+                    <p className="text-black text-xs leading-tight sm:hidden">Schedule evaluation with specialists</p>
                   </div>
                   <button
                     onClick={() => setIsBookingModalOpen(true)}
-                    className="bg-transparent border border-white sm:border-2 text-black font-bold px-2 sm:px-4 md:px-6 lg:px-8 py-1.5 sm:py-2 md:py-2.5 lg:py-3 rounded-md sm:rounded-lg hover:bg-white transition-all duration-300 w-fit uppercase tracking-wide text-[9px] sm:text-xs md:text-sm"
+                    className="bg-transparent border border-white sm:border-2 text-black font-bold px-2 sm:px-4 md:px-6 lg:px-8 py-1.5 sm:py-2 md:py-2.5 lg:py-3 rounded-md sm:rounded-lg hover:bg-white transition-all duration-300 w-fit uppercase tracking-wide text-xs md:text-sm"
                     onMouseEnter={(e: any) => e.target.style.color = '#D9953D'}
                     onMouseLeave={(e: any) => e.target.style.color = 'black'}
                   >

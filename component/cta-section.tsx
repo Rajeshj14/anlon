@@ -41,6 +41,10 @@ export default function CTASection() {
           animation: cta-pulse-ring 2s ease-out infinite;
         }
         .cta-ring-2 { animation-delay: 1s; }
+        @media (max-width: 640px) {
+          .cta-main-heading { font-size: 22px !important; }
+          .cta-body-text { font-size: 14px !important; }
+        }
       `}</style>
 
       <section
@@ -77,7 +81,7 @@ export default function CTASection() {
 
           {/* Headline */}
           <RevealOnScroll direction="up" duration={650} delay={100}>
-            <h2 className="font-bold leading-[1.15] mb-1"
+            <h2 className="cta-main-heading font-bold leading-[1.15] mb-1"
               style={{
                 fontFamily: "'Playfair Display', Georgia, serif",
                 fontSize: "clamp(28px,5vw,48px)", fontWeight: 700,
@@ -85,7 +89,7 @@ export default function CTASection() {
               }}>
               Ready to Start Your Hair Transformation?
             </h2>
-            <h2 className="font-bold italic leading-[1.2] mb-8"
+            <h2 className="cta-main-heading font-bold italic leading-[1.2] mb-8"
               style={{
                 fontFamily: "'Playfair Display', Georgia, serif",
                 fontSize: "clamp(28px,5vw,48px)", fontWeight: 700,
@@ -112,7 +116,7 @@ export default function CTASection() {
 
           {/* Body */}
           <RevealOnScroll direction="up" duration={650} delay={200}>
-            <p className="text-base leading-relaxed mx-auto mb-12 max-w-xl"
+            <p className="cta-body-text text-base leading-relaxed mx-auto mb-12 max-w-xl"
               style={{ color: "rgba(255,255,255,0.45)", fontWeight: 400 }}>
               Book a consultation with our dermatologist today. Walk in, get assessed, and leave with a personalised treatment plan designed specifically for your hair, your goals, and your budget.
             </p>
@@ -125,7 +129,7 @@ export default function CTASection() {
               <a
                 href="#"
                 onClick={e => { e.preventDefault(); window.dispatchEvent(new CustomEvent("open-booking-modal")); }}
-                className="cta-btn-primary relative inline-flex items-center justify-center gap-3 text-white font-semibold rounded-full px-7 py-4 sm:px-9 sm:py-5 text-[14px] sm:text-[15px] transition-all duration-300 hover:scale-105 w-full sm:w-auto"
+                className="cta-btn-primary relative inline-flex items-center justify-center gap-3 text-white font-semibold rounded-full px-7 py-4 sm:px-9 sm:py-5 text-[15px] transition-all duration-300 hover:scale-105 w-full sm:w-auto"
                 style={{
                   boxShadow: "0 8px 32px rgba(155,112,87,0.4), 0 2px 8px rgba(0,0,0,0.3)",
                   fontFamily: "Outfit, sans-serif",
@@ -143,10 +147,10 @@ export default function CTASection() {
 
               {/* Secondary — WhatsApp */}
               <a
-                href="https://wa.me/916385083099"
+                href="https://wa.me/919500653243"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-3 font-semibold text-[14px] sm:text-[15px] rounded-full px-7 py-4 sm:px-9 sm:py-5 border transition-all duration-300 hover:scale-105 w-full sm:w-auto"
+                className="inline-flex items-center justify-center gap-3 font-semibold text-[15px] rounded-full px-7 py-4 sm:px-9 sm:py-5 border transition-all duration-300 hover:scale-105 w-full sm:w-auto"
                 style={{
                   color: "rgba(255,255,255,0.85)",
                   borderColor: "rgba(155,112,87,0.3)",

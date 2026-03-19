@@ -2,7 +2,7 @@
 'use client'
 
 import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { X, Calendar, Phone, Mail, User, MessageSquare } from 'lucide-react';
+import { X, Calendar, Phone, Mail, User } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 // Define interface for form data
@@ -251,23 +251,6 @@ const BookingFormModal = ({
           </div>
         </div>
 
-        {/* Row 4: Message */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            <MessageSquare className="w-4 h-4 inline mr-1 text-[#9B7057]" />
-            Additional Message <span className="text-gray-400 text-xs">(Optional)</span>
-          </label>
-          <textarea
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            rows={3}
-            disabled={isSubmitting}
-            className="w-full px-4 py-3 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9B7057] focus:border-transparent transition-all resize-none disabled:bg-gray-100 disabled:cursor-not-allowed"
-            placeholder="Tell us about your concerns or specific requirements..."
-          />
-        </div>
-
         {/* Row 5: Consent */}
         <div className="flex items-start">
           <input
@@ -281,7 +264,7 @@ const BookingFormModal = ({
             className="mt-1 mr-2 w-4 h-4 text-[#9B7057] border-gray-300 rounded focus:ring-[#9B7057]"
           />
           <label htmlFor="consent" className="text-sm text-gray-600">
-            I consent to being contacted by Anlon Clinic regarding my appointment and treatment options. <span className="text-red-500">*</span>
+            Consent checkbox updated - I consent to being contacted via call, SMS, or WhatsApp regarding my appointment and treatment options. <span className="text-red-500">*</span>
           </label>
         </div>
 
@@ -302,10 +285,10 @@ const BookingFormModal = ({
               </span>
             ) : (
               <span className="flex items-center gap-2 flex-wrap justify-center">
-                <span className="text-[11px] font-semibold line-through text-red-300 tracking-wide whitespace-nowrap">
+                <span className="hidden md:inline  text-[11px] font-semibold line-through text-red-300 tracking-wide whitespace-nowrap">
                   Consultation Fee ₹499
                 </span>
-                <span className="text-[10px] font-bold text-green-300 tracking-wider uppercase border border-green-300 px-1.5 py-0.5 rounded-full">FREE</span>
+                <span className="hidden md:inline  text-[10px] font-bold text-green-300 tracking-wider uppercase border border-green-300 px-1.5 py-0.5 rounded-full">FREE</span>
                 <span className="w-px h-3 bg-white/30 hidden sm:block" />
                 <span className="flex items-center gap-1.5 font-bold text-sm sm:text-base whitespace-nowrap">
                   Book Your Consultation

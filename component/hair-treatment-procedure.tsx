@@ -366,6 +366,13 @@ export default function HairTreatmentProcedure() {
         @media (max-width: 1023px) {
           .htp-track-wrap { display: none; }
         }
+        @media (max-width: 640px) {
+          .htp-main-heading { font-size: 1.5rem !important; }
+          .htp-header-desc { font-size: 14px !important; }
+          .htp-card-title { font-size: 14px; }
+          .htp-card-desc { font-size: 14px; }
+          .htp-cta-sub { font-size: 14px !important; }
+        }
       `}</style>
 
       <section className="htp-root htp-section py-10 lg:py-14">
@@ -379,11 +386,11 @@ export default function HairTreatmentProcedure() {
               <span className="htp-eyebrow-dot" />
               How It Works
             </span>
-            <h2 style={{ fontSize: "clamp(1.9rem, 4vw, 3rem)", fontWeight: 900, color: "#1a1a1a", marginTop: 16, marginBottom: 12, lineHeight: 1.15, letterSpacing: "-0.5px" }}>
+            <h2 className="htp-main-heading" style={{ fontSize: "clamp(1.9rem, 4vw, 3rem)", fontWeight: 900, color: "#1a1a1a", marginTop: 16, marginBottom: 12, lineHeight: 1.15, letterSpacing: "-0.5px" }}>
               Hair Treatment{" "}
               <span style={{ color: "#9B7057" }}>Procedure</span>
             </h2>
-            <p style={{ fontSize: 15, color: "#6b7280", maxWidth: 500, margin: "0 auto", lineHeight: 1.75 }}>
+            <p className="htp-header-desc" style={{ fontSize: 15, color: "#6b7280", maxWidth: 500, margin: "0 auto", lineHeight: 1.75 }}>
               A simple, doctor-guided process designed for visible, lasting hair restoration results.
             </p>
           </div>
@@ -441,7 +448,7 @@ export default function HairTreatmentProcedure() {
 
           {/* ── CTA ── */}
           <div className="text-center max-sm:mt-6 mt-14">
-            <p style={{ fontSize: 13, color: "#9ca3af", marginBottom: 18, fontWeight: 500, letterSpacing: "0.3px" }}>
+            <p className="htp-cta-sub" style={{ fontSize: 13, color: "#9ca3af", marginBottom: 18, fontWeight: 500, letterSpacing: "0.3px" }}>
               Begin your personalised hair restoration journey today
             </p>
             <a

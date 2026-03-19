@@ -119,7 +119,7 @@ function ContactForm() {
           Book Now
         </a>
         <a
-          href="tel:+916385083099"
+          href="tel:+919500653243"
           className="sk-call-link"
           style={{
             display: "flex",
@@ -336,10 +336,17 @@ export default function SkinTreatments() {
           .sk-tabs-scroll { flex: 1; }
           .sk-img-wrap { min-height: 220px; }
           .sk-call-link { display: flex !important; }
+          .sk-main-heading { font-size: 22px !important; }
+          .sk-accent-heading { font-size: 20px !important; }
+          .sk-card-title { font-size: 20px !important; }
+          .sk-header-desc { font-size: 14px !important; }
+          .sk-subtitle { font-size: 14px !important; }
+          .sk-desc { font-size: 14px !important; }
+          .sk-ideal li { font-size: 14px !important; }
         }
       `}</style>
 
-      <section id="skin-treatments" ref={sectionRef} className="sk-root max-sm:py-5" style={{ background:"#080808", padding: "64px 16px" }}>
+      <section  id="anlon-treatments"  ref={sectionRef} className="sk-root max-sm:py-5" style={{ background:"#080808", padding: "64px 16px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
 
           {/* ── Header ── */}
@@ -352,13 +359,13 @@ export default function SkinTreatments() {
                 </span>
                 <div className="sk-eyebrow-r" />
               </div>
-              <h2 style={{ fontSize: "clamp(30px,5vw,48px)", fontWeight: 700, color: "white", lineHeight: 1.2, margin: "0 0 4px" }}>
+              <h2 className="sk-main-heading" style={{ fontSize: "clamp(30px,5vw,48px)", fontWeight: 700, color: "white", lineHeight: 1.2, margin: "0 0 4px" }}>
                 Advanced Treatments For
               </h2>
-              <h2 className="sk-italic-accent" style={{ fontSize: "clamp(28px,4.5vw,44px)", lineHeight: 1.25, margin: "0 0 16px" }}>
+              <h2 className="sk-italic-accent sk-accent-heading" style={{ fontSize: "clamp(28px,4.5vw,44px)", lineHeight: 1.25, margin: "0 0 16px" }}>
                 Every Hair Goal.
               </h2>
-              <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 14, maxWidth: 580, lineHeight: 1.7, margin: "0 auto" }}>
+              <p className="sk-header-desc" style={{ color: "rgba(255,255,255,0.4)", fontSize: 14, maxWidth: 580, lineHeight: 1.7, margin: "0 auto" }}>
                 Five clinically proven hair treatments. Each designed for a specific hair concern — all supervised personally by our expert dermatologists.
               </p>
             </div>
@@ -442,17 +449,17 @@ export default function SkinTreatments() {
                 </div>
 
                 {/* title */}
-                <h3 className="sk-serif" style={{ fontSize: "clamp(24px,3vw,34px)", fontWeight: 700, color: "white", lineHeight: 1.2, marginBottom: 8 }}>
+                <h3 className="sk-serif sk-card-title" style={{ fontSize: "clamp(24px,3vw,34px)", fontWeight: 700, color: "white", lineHeight: 1.2, marginBottom: 8 }}>
                   {current.name}
                 </h3>
 
                 {/* subtitle */}
-                <p style={{ color: "#c4906e", fontSize: 13, fontWeight: 500, lineHeight: 1.55, marginBottom: 12 }}>
+                <p className="sk-subtitle" style={{ color: "#c4906e", fontSize: 13, fontWeight: 500, lineHeight: 1.55, marginBottom: 12 }}>
                   {current.subtitle}
                 </p>
 
                 {/* description */}
-                <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 13, lineHeight: 1.75, marginBottom: 16 }}>
+                <p className="sk-desc" style={{ color: "rgba(255,255,255,0.45)", fontSize: 13, lineHeight: 1.75, marginBottom: 16 }}>
                   {current.description}
                 </p>
 
